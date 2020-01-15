@@ -54,7 +54,11 @@ class SAF_Main {
 
         //Classes
         include SAF_DIR_PATH . 'classes/Admin_Menu.php';
-        
+        include SAF_DIR_PATH . 'classes/File_Info.php';
+
+        //Action Hooks
+        include SAF_DIR_PATH . 'hooks/actions/wp_ajax_sync_all_files.php';
+
     }
 
     /**
@@ -74,6 +78,14 @@ class SAF_Main {
      */
     public function set_value(string $name, $value){
         update_option($this->option_prefix . $name, $value);
+    }
+
+    /**
+     * Get the directory sync path
+     * @return string
+     */
+    public function get_sync_path(){
+        return !empty($this->get_value('dir_sync')) ? rtrim($this->get_value('dir_sync'), '/') : ABSPATH . 'wp-content/uploads';
     }
 
 }

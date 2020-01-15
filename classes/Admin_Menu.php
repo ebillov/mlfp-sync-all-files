@@ -3,7 +3,7 @@
 //Exit if accessed directly.
 defined('ABSPATH') or exit;
 
-class Admin_Menu {
+class SAF_Admin_Menu extends SAF_Main {
 
     public function __construct(){
 
@@ -25,13 +25,45 @@ class Admin_Menu {
             'mlfp-sync-all-files',
             function(){
 
+                //Handle the post request
+                $this->handle_post('submit_dir_sync');
+
                 //Include the template file
-                include_once NPD_GST_DIR_PATH . 'views/admin-sync.php';
+                include_once SAF_DIR_PATH . 'views/admin-sync.php';
 
             }
         );
 
     }
 
+    /**
+     * Method to handle post request
+     * @param string the submit name field
+     */
+    public function handle_post($submit_handle = ''){
+
+        //Quick check on the submit handle
+        if(
+            isset($_POST[$submit_handle]) &&
+            !empty($submit_handle)
+            ){
+
+            //Update options in a loop
+            foreach($_POST as $name => $value){
+
+                //Do not include the submit name field
+                if($name !== $submit_handle){
+                    $this->set_value($name, $value);
+                }
+
+            }
+
+            //Print success notice
+            echo '<div class="notice notice-success"><p>Options Saved!</p></div>';
+
+        }
+
+    }
+
 }
-new Admin_Menu();
+new SAF_Admin_Menu();

@@ -31,7 +31,7 @@ define('SAF_DIR_PATH', preg_replace('/\s+/', '', plugin_dir_path(__FILE__)));
 
 //Include the main class.
 if( !class_exists( 'SAF_Main', false ) ) {
-	include_once SAF_DIR_PATH . 'classes/SAF_Main.php';
+	include_once SAF_DIR_PATH . 'classes/Main.php';
 }
 
 SAF_Main::instance();
